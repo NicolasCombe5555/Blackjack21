@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct PlayingCardDeck {
+struct CardDeck {
 
-    private(set) var cards = [PlayingCard]()
+    private(set) var cards = [Card]()
 
     init() {
-        for suit in PlayingCard.Suit.all {
-            for rank in PlayingCard.Rank.all {
-                cards.append(PlayingCard(suit: suit, rank: rank))
+        for suit in Card.Suit.all {
+            for rank in Card.Rank.all {
+                cards.append(Card(suit: suit, rank: rank))
             }
         }
     }
-   mutating func draw() -> PlayingCard? {
+   mutating func draw() -> Card? {
         if cards.count > 0 {
             return cards.remove(at: Int.random(in: 0..<cards.count))
         } else {

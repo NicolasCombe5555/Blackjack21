@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct PlayingCard : CustomStringConvertible {
+struct Card: CustomStringConvertible {
 
-    var suit : Suit
-    var rank : Rank
+    var suit: Suit
+    var rank: Rank
     var description: String { return "\(rank)\(suit)"}
 
     enum Suit: String, CustomStringConvertible {
@@ -23,7 +23,7 @@ struct PlayingCard : CustomStringConvertible {
         case clubs = "♣️"
         case diamonds = "♦️"
 
-        static var all = [Suit.spades,.hearts,.diamonds,.clubs]
+        static var all = [Suit.spades, .hearts, .diamonds, .clubs]
     }
 
     enum Rank: Int, CustomStringConvertible {
@@ -44,23 +44,23 @@ struct PlayingCard : CustomStringConvertible {
 
         var description: String {
             switch self {
-            case .ace : return "A"
-            case .two : return "2"
-            case .three : return "3"
-            case .four : return "4"
-            case .five : return "5"
-            case .six : return "6"
-            case .seven : return "7"
-            case .eight : return "8"
-            case .nine : return "9"
-            case .ten : return "10"
-            case .jack : return "J"
-            case .queen : return "Q"
-            case .king : return "K"
+            case .ace: return "A"
+            case .two: return "2"
+            case .three: return "3"
+            case .four: return "4"
+            case .five: return "5"
+            case .six: return "6"
+            case .seven: return "7"
+            case .eight: return "8"
+            case .nine: return "9"
+            case .ten: return "10"
+            case .jack: return "J"
+            case .queen: return "Q"
+            case .king: return "K"
             }
         }
 
-        static var all : [Rank] {
+        static var all: [Rank] {
             return [Rank.ace, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .jack, .queen, .king]
         }
     }
