@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayingCardView: UIView {
+class CardView: UIView {
 
     var rank: Int = 8 { didSet {setNeedsDisplay(); setNeedsLayout() } }
     var suit: String = "♣️" { didSet {setNeedsDisplay(); setNeedsLayout() } }
@@ -64,10 +64,8 @@ class PlayingCardView: UIView {
                 pintarCarta()
             }
         }
-
-
         else {
-            if let cardBackImage = UIImage(named : "Random13", in : Bundle(for:self.classForCoder), compatibleWith: traitCollection) {
+            if let cardBackImage = UIImage(named : "backImage", in : Bundle(for:self.classForCoder), compatibleWith: traitCollection) {
                 cardBackImage.draw(in: bounds)
             }
         }
@@ -111,7 +109,7 @@ class PlayingCardView: UIView {
 
 }
 
-extension PlayingCardView {
+extension CardView {
     private struct Constants {
         static let cornerFontSizeBoundsHeight : CGFloat = 0.085
         static let cornerRadiusSizeBoundsHeight : CGFloat = 0.06
