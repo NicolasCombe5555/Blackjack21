@@ -56,15 +56,47 @@
 		AE35D8B42402D9E700E1BA4B /* Blackjack21 */ = {
 			isa = PBXGroup;
 			children = (
-				AE35D8B52402D9E700E1BA4B /* AppDelegate.swift */,
-				AE35D8B72402D9E700E1BA4B /* SceneDelegate.swift */,
-				AE35D8B92402D9E700E1BA4B /* ViewController.swift */,
-				AE35D8BB2402D9E700E1BA4B /* Main.storyboard */,
-				AE35D8BE2402D9E800E1BA4B /* Assets.xcassets */,
-				AE35D8C02402D9E800E1BA4B /* LaunchScreen.storyboard */,
-				AE35D8C32402D9E800E1BA4B /* Info.plist */,
+				AE35D8C92402F1DC00E1BA4B /* SupportingFiles */,
+				AE35D8CA2402F20500E1BA4B /* Model */,
+				AE35D8CB2402F20C00E1BA4B /* Views */,
+				AE35D8CC2402F21A00E1BA4B /* Controllers */,
 			);
 			path = Blackjack21;
+			sourceTree = "<group>";
+		};
+		AE35D8C92402F1DC00E1BA4B /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AE35D8B52402D9E700E1BA4B /* AppDelegate.swift */,
+				AE35D8B72402D9E700E1BA4B /* SceneDelegate.swift */,
+				AE35D8C02402D9E800E1BA4B /* LaunchScreen.storyboard */,
+				AE35D8BB2402D9E700E1BA4B /* Main.storyboard */,
+				AE35D8BE2402D9E800E1BA4B /* Assets.xcassets */,
+				AE35D8C32402D9E800E1BA4B /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		AE35D8CA2402F20500E1BA4B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AE35D8CB2402F20C00E1BA4B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AE35D8CC2402F21A00E1BA4B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AE35D8B92402D9E700E1BA4B /* ViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,7 +317,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Blackjack21/Info.plist;
+				INFOPLIST_FILE = Blackjack21/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +334,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Blackjack21/Info.plist;
+				INFOPLIST_FILE = Blackjack21/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
