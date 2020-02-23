@@ -13,6 +13,8 @@
 		AE35D8BD2402D9E700E1BA4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE35D8BB2402D9E700E1BA4B /* Main.storyboard */; };
 		AE35D8BF2402D9E800E1BA4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE35D8BE2402D9E800E1BA4B /* Assets.xcassets */; };
 		AE35D8C22402D9E800E1BA4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE35D8C02402D9E800E1BA4B /* LaunchScreen.storyboard */; };
+		AE35D8CE2402F96000E1BA4B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8CD2402F96000E1BA4B /* Card.swift */; };
+		AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8CF2402FB7D00E1BA4B /* CardDeck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		AE35D8BE2402D9E800E1BA4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE35D8C12402D9E800E1BA4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AE35D8C32402D9E800E1BA4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE35D8CD2402F96000E1BA4B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		AE35D8CF2402FB7D00E1BA4B /* CardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 		AE35D8CA2402F20500E1BA4B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AE35D8CD2402F96000E1BA4B /* Card.swift */,
+				AE35D8CF2402FB7D00E1BA4B /* CardDeck.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -171,8 +177,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE35D8BA2402D9E700E1BA4B /* ViewController.swift in Sources */,
+				AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */,
 				AE35D8B62402D9E700E1BA4B /* AppDelegate.swift in Sources */,
 				AE35D8B82402D9E700E1BA4B /* SceneDelegate.swift in Sources */,
+				AE35D8CE2402F96000E1BA4B /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
