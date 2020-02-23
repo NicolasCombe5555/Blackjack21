@@ -15,6 +15,9 @@
 		AE35D8C22402D9E800E1BA4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE35D8C02402D9E800E1BA4B /* LaunchScreen.storyboard */; };
 		AE35D8CE2402F96000E1BA4B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8CD2402F96000E1BA4B /* Card.swift */; };
 		AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8CF2402FB7D00E1BA4B /* CardDeck.swift */; };
+		AE35D8D224031FF000E1BA4B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D124031FF000E1BA4B /* CardView.swift */; };
+		AE35D8D42403203C00E1BA4B /* BlackjackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D32403203C00E1BA4B /* BlackjackViewController.swift */; };
+		AE35D8D62403283300E1BA4B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D52403283300E1BA4B /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		AE35D8C32402D9E800E1BA4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE35D8CD2402F96000E1BA4B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		AE35D8CF2402FB7D00E1BA4B /* CardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeck.swift; sourceTree = "<group>"; };
+		AE35D8D124031FF000E1BA4B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		AE35D8D32403203C00E1BA4B /* BlackjackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackViewController.swift; sourceTree = "<group>"; };
+		AE35D8D52403283300E1BA4B /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,8 @@
 		AE35D8CB2402F20C00E1BA4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AE35D8D124031FF000E1BA4B /* CardView.swift */,
+				AE35D8D52403283300E1BA4B /* GameView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -101,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				AE35D8B92402D9E700E1BA4B /* ViewController.swift */,
+				AE35D8D32403203C00E1BA4B /* BlackjackViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -177,9 +186,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE35D8BA2402D9E700E1BA4B /* ViewController.swift in Sources */,
+				AE35D8D42403203C00E1BA4B /* BlackjackViewController.swift in Sources */,
 				AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */,
 				AE35D8B62402D9E700E1BA4B /* AppDelegate.swift in Sources */,
 				AE35D8B82402D9E700E1BA4B /* SceneDelegate.swift in Sources */,
+				AE35D8D224031FF000E1BA4B /* CardView.swift in Sources */,
+				AE35D8D62403283300E1BA4B /* GameView.swift in Sources */,
 				AE35D8CE2402F96000E1BA4B /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
