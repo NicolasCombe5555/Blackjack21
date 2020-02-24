@@ -14,6 +14,12 @@ class CardView: UIView {
     var suit: String = "♣️" { didSet {setNeedsDisplay(); setNeedsLayout() } }
     var isFaceUp: Bool = true { didSet {setNeedsDisplay(); setNeedsLayout() } }
 
+    private lazy var upperLeftCornerLabel = createCornerLabel()
+    private lazy var lowerRightCornerLabel = createCornerLabel()
+    private var cornerString : NSAttributedString{
+        return centeredAttributedString(rankString+"\n"+suit, fontSize: cornerFontSize)
+    }
+
     private func centeredAttributedString(_ string: String , fontSize : CGFloat) -> NSAttributedString {
         var font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
         font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
@@ -21,12 +27,6 @@ class CardView: UIView {
         paragraphStyle.alignment = .center
         return NSAttributedString(string: string, attributes: [.paragraphStyle:paragraphStyle,.font:font])
     }
-    private var cornerString : NSAttributedString{
-        return centeredAttributedString(rankString+"\n"+suit, fontSize: cornerFontSize)
-    }
-
-    private lazy var upperLeftCornerLabel = createCornerLabel()
-    private lazy var lowerRightCornerLabel = createCornerLabel()
 
     private func createCornerLabel() -> UILabel {
         let label = UILabel()
@@ -34,16 +34,14 @@ class CardView: UIView {
         addSubview(label)
         return label
     }
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        setNeedsDisplay()
-        setNeedsLayout()
-    }
+
     private func configureCornerLabel(_ label :UILabel) {
         label.attributedText = cornerString
         label.frame.size = CGSize.zero
         label.sizeToFit()
         label.isHidden = !isFaceUp
     }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         configureCornerLabel(upperLeftCornerLabel)
@@ -52,6 +50,7 @@ class CardView: UIView {
         lowerRightCornerLabel.transform = CGAffineTransform.identity.translatedBy(x: lowerRightCornerLabel.frame.size.width, y: lowerRightCornerLabel.frame.size.height).rotated(by: CGFloat.pi)
         lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
     }
+
     override func draw(_ rect: CGRect) {
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
         roundedRect.addClip()
@@ -105,8 +104,6 @@ class CardView: UIView {
             }
         }
     }
-
-
 }
 
 extension CardView {
