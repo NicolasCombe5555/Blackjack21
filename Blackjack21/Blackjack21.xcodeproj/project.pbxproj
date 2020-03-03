@@ -16,6 +16,8 @@
 		AE35D8D224031FF000E1BA4B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D124031FF000E1BA4B /* CardView.swift */; };
 		AE35D8D42403203C00E1BA4B /* BlackjackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D32403203C00E1BA4B /* BlackjackViewController.swift */; };
 		AE35D8D62403283300E1BA4B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D52403283300E1BA4B /* GameView.swift */; };
+		AE375FF9240F1C7600066DF5 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */; };
+		AE375FFB240F1F4700066DF5 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		AE35D8D124031FF000E1BA4B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		AE35D8D32403203C00E1BA4B /* BlackjackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackViewController.swift; sourceTree = "<group>"; };
 		AE35D8D52403283300E1BA4B /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
+		AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				AE35D8C92402F1DC00E1BA4B /* SupportingFiles */,
+				AE375FF7240F1C5A00066DF5 /* Extensions */,
 				AE35D8CA2402F20500E1BA4B /* Model */,
 				AE35D8CB2402F20C00E1BA4B /* Views */,
 				AE35D8CC2402F21A00E1BA4B /* Controllers */,
@@ -106,6 +111,15 @@
 				AE35D8D32403203C00E1BA4B /* BlackjackViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		AE375FF7240F1C5A00066DF5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */,
+				AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,7 +192,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE375FFB240F1F4700066DF5 /* UIColorExtensions.swift in Sources */,
 				AE35D8D42403203C00E1BA4B /* BlackjackViewController.swift in Sources */,
+				AE375FF9240F1C7600066DF5 /* CGRectExtensions.swift in Sources */,
 				AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */,
 				AE35D8B62402D9E700E1BA4B /* AppDelegate.swift in Sources */,
 				AE35D8B82402D9E700E1BA4B /* SceneDelegate.swift in Sources */,

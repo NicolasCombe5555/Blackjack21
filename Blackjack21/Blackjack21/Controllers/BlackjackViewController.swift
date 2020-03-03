@@ -14,15 +14,17 @@ class BlackjackViewController: UIViewController {
 
     override func loadView() {
         view = myView
+        myView.hitButton.addTarget(self, action: #selector(hitTapped), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            UIView.transition(with: self.myView.test, duration: 1, options: [.transitionFlipFromLeft], animations: {
-                self.myView.test.isFaceUp = !self.myView.test.isFaceUp
-            })
-        }
+    }
+
+    @objc func hitTapped() {
+        UIView.transition(with: self.myView.test, duration: 1, options: [.transitionFlipFromLeft], animations: {
+            self.myView.test.isFaceUp = !self.myView.test.isFaceUp
+        })
     }
 }
 
