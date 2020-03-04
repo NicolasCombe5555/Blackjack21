@@ -36,11 +36,16 @@ class BlackjackViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.4) {
             self.myView.drawCardForDealer()
         }
-
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.4) {
+            self.myView.hitButton.isEnabled = true
+            self.myView.standButton.isEnabled = true
+        }
     }
 
     @objc private func endGame() {
         guard let firstDealerCard = myView.dealerCards.first else { return }
+        myView.standButton.isEnabled = false
+        myView.hitButton.isEnabled = false
         UIView.transition(with: firstDealerCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
             firstDealerCard.isFaceUp = !firstDealerCard.isFaceUp
         })
@@ -57,6 +62,7 @@ class BlackjackViewController: UIViewController {
         view = myView
         myView.delegate = self
         myView.standButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
+        myView.standButton.isEnabled = true
     }
 }
 

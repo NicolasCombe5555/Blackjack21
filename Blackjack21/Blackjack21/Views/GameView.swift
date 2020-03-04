@@ -22,7 +22,7 @@ class GameView: UIView {
         return imageView
     }()
     
-    private let hitButton: UIButton = {
+    let hitButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
@@ -54,7 +54,7 @@ class GameView: UIView {
         super.init(frame: frame)
         createSubviews()
         addCards()
-        hitButton.addTarget(self, action: #selector(drawCardForPlayer), for: .touchUpInside)
+        setUpButtons()
     }
     
     required init?(coder: NSCoder) {
@@ -85,6 +85,12 @@ class GameView: UIView {
             hitButton.widthAnchor.constraint(equalToConstant: 60),
         ])
     }
+
+    private func setUpButtons() {
+        hitButton.addTarget(self, action: #selector(drawCardForPlayer), for: .touchUpInside)
+        hitButton.isEnabled = false
+        standButton.isEnabled = false
+    }
     
     private func addCards() {
         var cardDeck = CardDeck()
@@ -102,7 +108,9 @@ class GameView: UIView {
         }
     }
     
-    @objc func drawCardForPlayer() {
+    @objc func drawCardForPlayer(isGameStarting: Bool = false) {
+        hitButton.isEnabled = false
+        standButton.isEnabled = false
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
         
@@ -121,8 +129,13 @@ class GameView: UIView {
             
             UIView.transition(with: drawnCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
                 drawnCard.isFaceUp = !drawnCard.isFaceUp
+            }, completion: { _ in
+                if !isGameStarting {
+                    self.hitButton.isEnabled = true
+                    self.standButton.isEnabled = true
+                }
+                self.delegate?.checkForBust()
             })
-            self.delegate?.checkForBust()
         })
     }
     
