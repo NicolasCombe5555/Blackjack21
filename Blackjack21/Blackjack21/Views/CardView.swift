@@ -124,12 +124,12 @@ extension CardView {
     }
     private var rankString : String {
         switch rank {
-            case 1 : return "A"
-            case 2...10 : return String(rank)
-            case 11 : return "J"
-            case 12 : return "Q"
-            case 13 : return "K"
-            default: return "?"
+        case 1 : return "A"
+        case 2...10 : return String(rank)
+        case 11 : return "J"
+        case 12 : return "Q"
+        case 13 : return "K"
+        default: return "?"
         }
     }
 }

@@ -8,16 +8,55 @@
 
 import UIKit
 
+protocol Dealer: class {
+    func checkForBust()
+}
+
 class BlackjackViewController: UIViewController {
 
     private let myView = GameView()
 
     override func loadView() {
         view = myView
+        myView.delegate = self
+        myView.standButton.addTarget(self, action: #selector(endGame), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        startGame()
+    }
+
+    private func startGame() {
+        myView.drawCardForPlayer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            self.myView.drawCardForDealer(isFirstCard: true)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
+            self.myView.drawCardForPlayer()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.4) {
+            self.myView.drawCardForDealer()
+        }
+
+    }
+
+    @objc private func restartGame() {
+
+    }
+
+    @objc private func endGame() {
+        guard let firstDealerCard = myView.dealerCards.first else { return }
+        UIView.transition(with: firstDealerCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
+            firstDealerCard.isFaceUp = !firstDealerCard.isFaceUp
+        })
+
+    }
+}
+
+extension BlackjackViewController: Dealer {
+    func checkForBust() {
+        //        if myView.playerCards.reduce { $0.rank.rawvalue, +} > 21 { endGame()}
     }
 }
 

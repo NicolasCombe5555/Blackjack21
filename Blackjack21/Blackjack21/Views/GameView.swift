@@ -9,20 +9,20 @@
 import UIKit
 
 class GameView: UIView {
-
-    var drawCount: CGFloat = 0
-    var dealerCards = [Card]()
-    var playerCards = [Card]()
-    var deck = [CardView]()
-
+    
+    private var deck = [CardView]()
+    var dealerCards = [CardView]()
+    var playerCards = [CardView]()
+    weak var delegate: Dealer?
+    
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "b3")
         return imageView
     }()
-
-    let hitButton: UIButton = {
+    
+    private let hitButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
@@ -32,7 +32,7 @@ class GameView: UIView {
         button.setTitle("Carta", for: .normal)
         return button
     }()
-
+    
     let standButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -43,43 +43,49 @@ class GameView: UIView {
         button.setTitle("Parar", for: .normal)
         return button
     }()
-
+    
+    let dealerHandLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubviews()
         addCards()
-        hitButton.addTarget(self, action: #selector(drawCard), for: .touchUpInside)
+        hitButton.addTarget(self, action: #selector(drawCardForPlayer), for: .touchUpInside)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func createSubviews() {
         addSubview(backgroundImageView)
         addSubview(hitButton)
         addSubview(standButton)
-
+        
         NSLayoutConstraint.activate([
             //Background Image
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-
+            
             //Buttons
             standButton.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor, constant: 0),
             standButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: -40),
             standButton.heightAnchor.constraint(equalToConstant: 44),
             standButton.widthAnchor.constraint(equalToConstant: 60),
-
+            
             hitButton.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor, constant: 0),
             hitButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 40),
             hitButton.heightAnchor.constraint(equalToConstant: 44),
             hitButton.widthAnchor.constraint(equalToConstant: 60),
         ])
     }
-
+    
     private func addCards() {
         var cardDeck = CardDeck()
         cardDeck.cards.shuffle()
@@ -90,34 +96,59 @@ class GameView: UIView {
             cardView.backgroundColor = .clear
             cardView.isOpaque = false
             cardView.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(cardView)
+            backgroundImageView.addSubview(cardView)
             cardView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/4)
             deck.append(cardView)
         }
     }
-
-    @objc private func drawCard() {
+    
+    @objc func drawCardForPlayer() {
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
-
-        UIView.animate(withDuration: 1, animations: {
+        
+        UIView.animate(withDuration: 0.5, animations: {
             NSLayoutConstraint.activate([
-                drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * self.drawCount)),
+                drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * CGFloat(self.playerCards.count))),
                 drawnCard.bottomAnchor.constraint(equalTo: self.backgroundImageView.bottomAnchor, constant: -135),
                 drawnCard.heightAnchor.constraint(equalToConstant: 135),
                 drawnCard.widthAnchor.constraint(equalToConstant: 85)
             ])
             drawnCard.transform = CGAffineTransform(rotationAngle: 0)
             self.layoutIfNeeded()
-
-        }, completion: { _ in
-            self.drawCount += 1
             
-            UIView.transition(with: drawnCard, duration: 1, options: [.transitionFlipFromLeft], animations: {
+        }, completion: { _ in
+            self.playerCards.append(drawnCard)
+            
+            UIView.transition(with: drawnCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
                 drawnCard.isFaceUp = !drawnCard.isFaceUp
             })
+            self.delegate?.checkForBust()
         })
-
+    }
+    
+    @objc func drawCardForDealer(isFirstCard: Bool = false) {
+        let drawnCard = deck.popLast() ?? CardView()
+        backgroundImageView.addSubview(drawnCard)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            NSLayoutConstraint.activate([
+                drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * CGFloat(self.dealerCards.count))),
+                drawnCard.topAnchor.constraint(equalTo: self.backgroundImageView.topAnchor, constant: 135),
+                drawnCard.heightAnchor.constraint(equalToConstant: 135),
+                drawnCard.widthAnchor.constraint(equalToConstant: 85)
+            ])
+            drawnCard.transform = CGAffineTransform(rotationAngle: 0)
+            self.layoutIfNeeded()
+            
+        }, completion: { _ in
+            self.dealerCards.append(drawnCard)
+            if !isFirstCard {
+                UIView.transition(with: drawnCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
+                    drawnCard.isFaceUp = !drawnCard.isFaceUp
+                })
+            }
+        })
     }
 }
+
 
