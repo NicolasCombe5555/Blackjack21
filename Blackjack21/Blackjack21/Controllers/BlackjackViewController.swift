@@ -14,12 +14,10 @@ protocol Dealer: class {
 
 class BlackjackViewController: UIViewController {
 
-    private let myView = GameView()
+    private var myView = GameView()
 
     override func loadView() {
-        view = myView
-        myView.delegate = self
-        myView.standButton.addTarget(self, action: #selector(endGame), for: .touchUpInside)
+        setUpView()
     }
 
     override func viewDidLoad() {
@@ -41,16 +39,24 @@ class BlackjackViewController: UIViewController {
 
     }
 
-    @objc private func restartGame() {
-
-    }
-
     @objc private func endGame() {
         guard let firstDealerCard = myView.dealerCards.first else { return }
         UIView.transition(with: firstDealerCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
             firstDealerCard.isFaceUp = !firstDealerCard.isFaceUp
         })
+    }
 
+    @objc private func restartGame() {
+        myView = GameView()
+        setUpView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.startGame() }
+
+    }
+
+    private func setUpView() {
+        view = myView
+        myView.delegate = self
+        myView.standButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
     }
 }
 

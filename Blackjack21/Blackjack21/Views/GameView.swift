@@ -96,7 +96,7 @@ class GameView: UIView {
             cardView.backgroundColor = .clear
             cardView.isOpaque = false
             cardView.translatesAutoresizingMaskIntoConstraints = false
-            backgroundImageView.addSubview(cardView)
+            addSubview(cardView)
             cardView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/4)
             deck.append(cardView)
         }
