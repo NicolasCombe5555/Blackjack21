@@ -10,7 +10,7 @@ import Foundation
 
 struct CardDeck {
 
-    private(set) var cards = [Card]()
+    var cards = [Card]()
 
     init() {
         for suit in Card.Suit.all {

@@ -10,13 +10,10 @@ import UIKit
 
 class GameView: UIView {
 
-    let test: CardView = {
-        let cardView = CardView()
-        cardView.backgroundColor = .clear
-        cardView.isOpaque = false
-        cardView.translatesAutoresizingMaskIntoConstraints = false
-        return cardView
-    }()
+    var drawCount: CGFloat = 0
+    var dealerCards = [Card]()
+    var playerCards = [Card]()
+    var deck = [CardView]()
 
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -50,6 +47,8 @@ class GameView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubviews()
+        addCards()
+        hitButton.addTarget(self, action: #selector(drawCard), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -58,7 +57,6 @@ class GameView: UIView {
 
     private func createSubviews() {
         addSubview(backgroundImageView)
-        backgroundImageView.addSubview(test)
         addSubview(hitButton)
         addSubview(standButton)
 
@@ -79,12 +77,47 @@ class GameView: UIView {
             hitButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 40),
             hitButton.heightAnchor.constraint(equalToConstant: 44),
             hitButton.widthAnchor.constraint(equalToConstant: 60),
-
-            test.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: -60),
-            test.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: -135),
-            test.heightAnchor.constraint(equalToConstant: 135),
-            test.widthAnchor.constraint(equalToConstant: 85)
         ])
+    }
+
+    private func addCards() {
+        var cardDeck = CardDeck()
+        cardDeck.cards.shuffle()
+        for card in cardDeck.cards {
+            let cardView = CardView(frame: CGRect(x: (UIScreen.main.nativeBounds.width / UIScreen.main.scale) - 100, y: 15, width: 85, height: 135))
+            cardView.rank = Int(card.rank.description) ?? 0
+            cardView.suit = card.suit.description
+            cardView.backgroundColor = .clear
+            cardView.isOpaque = false
+            cardView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(cardView)
+            cardView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/4)
+            deck.append(cardView)
+        }
+    }
+
+    @objc private func drawCard() {
+        let drawnCard = deck.popLast() ?? CardView()
+        backgroundImageView.addSubview(drawnCard)
+
+        UIView.animate(withDuration: 1, animations: {
+            NSLayoutConstraint.activate([
+                drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * self.drawCount)),
+                drawnCard.bottomAnchor.constraint(equalTo: self.backgroundImageView.bottomAnchor, constant: -135),
+                drawnCard.heightAnchor.constraint(equalToConstant: 135),
+                drawnCard.widthAnchor.constraint(equalToConstant: 85)
+            ])
+            drawnCard.transform = CGAffineTransform(rotationAngle: 0)
+            self.layoutIfNeeded()
+
+        }, completion: { _ in
+            self.drawCount += 1
+            
+            UIView.transition(with: drawnCard, duration: 1, options: [.transitionFlipFromLeft], animations: {
+                drawnCard.isFaceUp = !drawnCard.isFaceUp
+            })
+        })
+
     }
 }
 
