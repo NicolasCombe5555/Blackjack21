@@ -18,6 +18,8 @@
 		AE35D8D62403283300E1BA4B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D52403283300E1BA4B /* GameView.swift */; };
 		AE375FF9240F1C7600066DF5 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */; };
 		AE375FFB240F1F4700066DF5 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */; };
+		AE4D01E52411905B0088A7ED /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4D01E42411905B0088A7ED /* ArrayExtensions.swift */; };
+		AE4D01E7241193B30088A7ED /* BlackjackBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4D01E6241193B30088A7ED /* BlackjackBrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		AE35D8D52403283300E1BA4B /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		AE4D01E42411905B0088A7ED /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		AE4D01E6241193B30088A7ED /* BlackjackBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 			children = (
 				AE35D8CD2402F96000E1BA4B /* Card.swift */,
 				AE35D8CF2402FB7D00E1BA4B /* CardDeck.swift */,
+				AE4D01E6241193B30088A7ED /* BlackjackBrain.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 			children = (
 				AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */,
 				AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */,
+				AE4D01E42411905B0088A7ED /* ArrayExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -193,6 +199,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE375FFB240F1F4700066DF5 /* UIColorExtensions.swift in Sources */,
+				AE4D01E52411905B0088A7ED /* ArrayExtensions.swift in Sources */,
+				AE4D01E7241193B30088A7ED /* BlackjackBrain.swift in Sources */,
 				AE35D8D42403203C00E1BA4B /* BlackjackViewController.swift in Sources */,
 				AE375FF9240F1C7600066DF5 /* CGRectExtensions.swift in Sources */,
 				AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */,

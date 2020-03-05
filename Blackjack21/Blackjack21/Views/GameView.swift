@@ -47,6 +47,16 @@ class GameView: UIView {
     let dealerHandLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textColor = .white
+        return label
+    }()
+
+    let playerHandLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textColor = .white
         return label
     }()
     
@@ -65,6 +75,8 @@ class GameView: UIView {
         addSubview(backgroundImageView)
         addSubview(hitButton)
         addSubview(standButton)
+        addSubview(dealerHandLabel)
+        addSubview(playerHandLabel)
         
         NSLayoutConstraint.activate([
             //Background Image
@@ -83,6 +95,13 @@ class GameView: UIView {
             hitButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 40),
             hitButton.heightAnchor.constraint(equalToConstant: 44),
             hitButton.widthAnchor.constraint(equalToConstant: 60),
+
+            //Labels
+            dealerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 0),
+            dealerHandLabel.topAnchor.constraint(equalTo: backgroundImageView.topAnchor, constant: 60),
+
+            playerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 0),
+            playerHandLabel.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: -60),
         ])
     }
 
@@ -114,7 +133,7 @@ class GameView: UIView {
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 1, animations: {
             NSLayoutConstraint.activate([
                 drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * CGFloat(self.playerCards.count))),
                 drawnCard.bottomAnchor.constraint(equalTo: self.backgroundImageView.bottomAnchor, constant: -135),
@@ -127,14 +146,14 @@ class GameView: UIView {
         }, completion: { _ in
             self.playerCards.append(drawnCard)
             
-            UIView.transition(with: drawnCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
+            UIView.transition(with: drawnCard, duration: 1, options: [.transitionFlipFromLeft], animations: {
                 drawnCard.isFaceUp = !drawnCard.isFaceUp
             }, completion: { _ in
                 if !isGameStarting {
                     self.hitButton.isEnabled = true
                     self.standButton.isEnabled = true
                 }
-                self.delegate?.checkForBust()
+                self.delegate?.updateCounters(for: 1)
             })
         })
     }
@@ -143,7 +162,7 @@ class GameView: UIView {
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 1, animations: {
             NSLayoutConstraint.activate([
                 drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * CGFloat(self.dealerCards.count))),
                 drawnCard.topAnchor.constraint(equalTo: self.backgroundImageView.topAnchor, constant: 135),
@@ -156,8 +175,10 @@ class GameView: UIView {
         }, completion: { _ in
             self.dealerCards.append(drawnCard)
             if !isFirstCard {
-                UIView.transition(with: drawnCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
+                UIView.transition(with: drawnCard, duration: 1, options: [.transitionFlipFromLeft], animations: {
                     drawnCard.isFaceUp = !drawnCard.isFaceUp
+                }, completion: { _ in
+                    self.delegate?.updateCounters(for: 2)
                 })
             }
         })

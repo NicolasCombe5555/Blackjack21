@@ -9,12 +9,16 @@
 import UIKit
 
 protocol Dealer: class {
-    func checkForBust()
+    func updateUI(state: State)
+    func updateCounters(for type: Int8)
 }
 
 class BlackjackViewController: UIViewController {
 
     private var myView = GameView()
+    private let blackjackBrain = BlackjackBrain()
+    private var playerHand: UInt8 = 0
+    private var dealerHand: UInt8 = 0
 
     override func loadView() {
         setUpView()
@@ -26,17 +30,19 @@ class BlackjackViewController: UIViewController {
     }
 
     private func startGame() {
-        myView.drawCardForPlayer()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-            self.myView.drawCardForDealer(isFirstCard: true)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.myView.drawCardForPlayer()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
+            self.myView.drawCardForDealer(isFirstCard: true)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.6) {
+            self.myView.drawCardForPlayer()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             self.myView.drawCardForDealer()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.9) {
             self.myView.hitButton.isEnabled = true
             self.myView.standButton.isEnabled = true
         }
@@ -46,6 +52,7 @@ class BlackjackViewController: UIViewController {
         guard let firstDealerCard = myView.dealerCards.first else { return }
         myView.standButton.isEnabled = false
         myView.hitButton.isEnabled = false
+        myView.dealerHandLabel.isHidden = false
         UIView.transition(with: firstDealerCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
             firstDealerCard.isFaceUp = !firstDealerCard.isFaceUp
         })
@@ -63,127 +70,43 @@ class BlackjackViewController: UIViewController {
         myView.delegate = self
         myView.standButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
         myView.standButton.isEnabled = true
+        myView.dealerHandLabel.isHidden = true
     }
 }
 
 extension BlackjackViewController: Dealer {
-    func checkForBust() {
-        //        if myView.playerCards.reduce { $0.rank.rawvalue, +} > 21 { endGame()}
+    func updateUI(state: State) {
+        switch state {
+        case .busted:
+            myView.playerHandLabel.textColor = .systemRed
+            UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                self.myView.playerHandLabel.transform = CGAffineTransform(scaleX: 2, y: 2)
+
+            }) { _ in
+                UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                    self.myView.playerHandLabel.transform = .identity
+                }) { _ in
+                    self.endGame()
+                }
+            }
+        case .blackjack:
+            myView.playerHandLabel.textColor = .systemGreen
+            endGame()
+        default:
+            return
+        }
+    }
+
+    func updateCounters(for type: Int8) {
+        switch type {
+        case 1:
+            let response = blackjackBrain.calculateHand(with: myView.playerCards)
+            myView.playerHandLabel.text = response
+            updateUI(state: blackjackBrain.checkHand(Int(response) ?? 0))
+        case 2:
+            myView.dealerHandLabel.text = blackjackBrain.calculateHand(with: myView.dealerCards)
+        default:
+            return
+        }
     }
 }
-
-//deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]*4
-//
-//def deal(deck):
-//    hand = []
-//    for i in range(2):
-//        random.shuffle(deck)
-//        card = deck.pop()
-//        if card == 11:card = "J"
-//        if card == 12:card = "Q"
-//        if card == 13:card = "K"
-//        if card == 14:card = "A"
-//        hand.append(card)
-//    return hand
-//
-//def play_again():
-//    again = input("Do you want to play again? (Y/N) : ").lower()
-//    if again == "y":
-//        dealer_hand = []
-//        player_hand = []
-//        deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]*4
-//        game()
-//    else:
-//        print ("Bye!")
-//        exit()
-//
-//def total(hand):
-//    total = 0
-//    for card in hand:
-//        if card == "J" or card == "Q" or card == "K":
-//            total+= 10
-//        elif card == "A":
-//            if total >= 11:
-//                total+= 1
-//            else:
-//                total+= 11
-//        else:
-//            total += card
-//    return total
-//
-//def hit(hand):
-//    card = deck.pop()
-//    if card == 11:card = "J"
-//    if card == 12:card = "Q"
-//    if card == 13:card = "K"
-//    if card == 14:card = "A"
-//    hand.append(card)
-//    return hand
-//
-//def clear():
-//    if os.name == 'nt':
-//        os.system('CLS')
-//    if os.name == 'posix':
-//        os.system('clear')
-//
-//def print_results(dealer_hand, player_hand):
-//    clear()
-//    print ("The dealer has a " + str(dealer_hand) + " for a total of " + str(total(dealer_hand)))
-//    print ("You have a " + str(player_hand) + " for a total of " + str(total(player_hand)))
-//
-//def blackjack(dealer_hand, player_hand):
-//    if total(player_hand) == 21:
-//        print_results(dealer_hand, player_hand)
-//        print ("Congratulations! You got a Blackjack!\n")
-//        play_again()
-//    elif total(dealer_hand) == 21:
-//        print_results(dealer_hand, player_hand)
-//        print ("Sorry, you lose. The dealer got a blackjack.\n")
-//        play_again()
-//
-//def score(dealer_hand, player_hand):
-//    if total(player_hand) == 21:
-//        print_results(dealer_hand, player_hand)
-//        print ("Congratulations! You got a Blackjack!\n")
-//    elif total(dealer_hand) == 21:
-//        print_results(dealer_hand, player_hand)
-//        print ("Sorry, you lose. The dealer got a blackjack.\n")
-//    elif total(player_hand) > 21:
-//        print_results(dealer_hand, player_hand)
-//        print( "Sorry. You busted. You lose.\n")
-//    elif total(dealer_hand) > 21:
-//        print_results(dealer_hand, player_hand)
-//        print( "Dealer busts. You win!\n")
-//    elif total(player_hand) < total(dealer_hand):
-//        print_results(dealer_hand, player_hand)
-//        print ("Sorry. Your score isn't higher than the dealer. You lose.\n")
-//    elif total(player_hand) > total(dealer_hand):
-//        print_results(dealer_hand, player_hand)
-//        print ("Congratulations. Your score is higher than the dealer. You win\n"    )
-//
-//def game():
-//    choice = 0
-//    clear()
-//    print ("WELCOME TO BLACKJACK!\n")
-//    dealer_hand = deal(deck)
-//    player_hand = deal(deck)
-//    while choice != "q":
-//        print ("The dealer is showing a " + str(dealer_hand[0]))
-//        print ("You have a " + str(player_hand) + " for a total of " + str(total(player_hand)))
-//        blackjack(dealer_hand, player_hand)
-//        choice = input("Do you want to [H]it, [S]tand, or [Q]uit: ").lower()
-//        clear()
-//        if choice == "h":
-//            hit(player_hand)
-//            while total(dealer_hand) < 17:
-//                hit(dealer_hand)
-//            score(dealer_hand, player_hand)
-//            play_again()
-//        elif choice == "s":
-//            while total(dealer_hand) < 17:
-//                hit(dealer_hand)
-//            score(dealer_hand, player_hand)
-//            play_again()
-//        elif choice == "q":
-//            print ("Bye!")
-//            exit()
