@@ -17,12 +17,12 @@ struct BlackjackBrain {
     
     func calculateHand(with cardViews: [CardView]) -> String {
         let copy = cardViews.map { $0.rank }
-        let fixedCopy = copy.replacingMultipleOccurrences(of: 11, 12, 13, with: 10)
+        let fixedCopy = copy.map { [11,12,13].contains($0) ? 10 : $0}
         let normalHand = fixedCopy.reduce(0, { $0 + $1 })
         if !fixedCopy.contains(1) {
             return "\(normalHand)"
         } else {
-            let handIfAce = fixedCopy.replacingMultipleOccurrences(of: 1, with: 11).reduce(0, { $0 + $1 })
+            let handIfAce = fixedCopy.map { $0 == 1 ? 11 : $0}.reduce(0, { $0 + $1 })
             switch (normalHand, handIfAce) {
             case (_, 21..<100): // handIfAce > 21
                 print("1")
