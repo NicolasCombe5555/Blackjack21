@@ -18,6 +18,8 @@
 		AE35D8D62403283300E1BA4B /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE35D8D52403283300E1BA4B /* GameView.swift */; };
 		AE375FF9240F1C7600066DF5 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */; };
 		AE375FFB240F1F4700066DF5 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */; };
+		AE4B0A102413473F007A2FA8 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4B0A0F2413473F007A2FA8 /* Modal.swift */; };
+		AE4B0A1224134769007A2FA8 /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4B0A1124134769007A2FA8 /* Popup.swift */; };
 		AE4D01E7241193B30088A7ED /* BlackjackBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4D01E6241193B30088A7ED /* BlackjackBrain.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		AE35D8D52403283300E1BA4B /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		AE375FF8240F1C7600066DF5 /* CGRectExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		AE4B0A0F2413473F007A2FA8 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
+		AE4B0A1124134769007A2FA8 /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
 		AE4D01E6241193B30088A7ED /* BlackjackBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +72,7 @@
 		AE35D8B42402D9E700E1BA4B /* Blackjack21 */ = {
 			isa = PBXGroup;
 			children = (
+				AE4B0A0E24134728007A2FA8 /* Popup */,
 				AE35D8C92402F1DC00E1BA4B /* SupportingFiles */,
 				AE375FF7240F1C5A00066DF5 /* Extensions */,
 				AE35D8CA2402F20500E1BA4B /* Model */,
@@ -123,6 +128,15 @@
 				AE375FFA240F1F4700066DF5 /* UIColorExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AE4B0A0E24134728007A2FA8 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				AE4B0A0F2413473F007A2FA8 /* Modal.swift */,
+				AE4B0A1124134769007A2FA8 /* Popup.swift */,
+			);
+			path = Popup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,11 +209,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE4B0A102413473F007A2FA8 /* Modal.swift in Sources */,
 				AE375FFB240F1F4700066DF5 /* UIColorExtensions.swift in Sources */,
 				AE4D01E7241193B30088A7ED /* BlackjackBrain.swift in Sources */,
 				AE35D8D42403203C00E1BA4B /* BlackjackViewController.swift in Sources */,
 				AE375FF9240F1C7600066DF5 /* CGRectExtensions.swift in Sources */,
 				AE35D8D02402FB7D00E1BA4B /* CardDeck.swift in Sources */,
+				AE4B0A1224134769007A2FA8 /* Popup.swift in Sources */,
 				AE35D8B62402D9E700E1BA4B /* AppDelegate.swift in Sources */,
 				AE35D8B82402D9E700E1BA4B /* SceneDelegate.swift in Sources */,
 				AE35D8D224031FF000E1BA4B /* CardView.swift in Sources */,

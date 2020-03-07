@@ -63,16 +63,16 @@ class BlackjackViewController: UIViewController {
         })
         switch state {
         case 1: // bust
-            print("gano la casa")
-            // mostrar popup
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { self.restartGame() }
+            let dealerHand = stand(text: myView.dealerHandLabel.text ?? "")
+            let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            alert.dismissDelegate = self
+            alert.show(animated: true, onView: self.view)
         case 2: // blackjack
-            print("gano jugador")
-            // mostrar popup
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { self.restartGame() }
+            let alert = CustomPopUp(title: "Gano jugador con 21!", image: UIImage(named: "backImage") ?? UIImage())
+            alert.dismissDelegate = self
+            alert.show(animated: true, onView: self.view)
         case 3:
             let dealerHand = stand(text: myView.dealerHandLabel.text ?? "")
-            print(dealerHand)
             if dealerHand <= 16 {
                 myView.drawCardForDealer(isFirstCard: false, isFinishingGame: true)
             } else {
@@ -148,21 +148,27 @@ extension BlackjackViewController: Dealer {
     func calculateWinner(dealerHand: Int) {
         switch dealerHand {
         case let number where number == self.playerHand:
-            print("empate")
-            // mostrar popup
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { self.restartGame() }
+            let alert = CustomPopUp(title: "Empate", image: UIImage(named: "backImage") ?? UIImage())
+            alert.dismissDelegate = self
+            alert.show(animated: true, onView: self.view)
         case let number where number < self.playerHand:
-            print("gano jugador")
-            // mostrar popup
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { self.restartGame() }
+            let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            alert.dismissDelegate = self
+            alert.show(animated: true, onView: self.view)
         case let number where number > 21:
-            print("gano jugador")
-            // mostrar popup
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { self.restartGame() }
+            let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            alert.dismissDelegate = self
+            alert.show(animated: true, onView: self.view)
         default:
-            print("gano la casa")
-            // mostrar popup
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { self.restartGame() }
+            let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            alert.dismissDelegate = self
+            alert.show(animated: true, onView: self.view)
         }
+    }
+}
+
+extension BlackjackViewController: DismissCustomPopUp {
+    func changeUI() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.restartGame() }
     }
 }
