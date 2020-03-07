@@ -158,7 +158,7 @@ class GameView: UIView {
         })
     }
     
-    @objc func drawCardForDealer(isFirstCard: Bool = false) {
+    @objc func drawCardForDealer(isFirstCard: Bool = false, isFinishingGame: Bool = false) {
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
         
@@ -179,10 +179,31 @@ class GameView: UIView {
                     drawnCard.isFaceUp = !drawnCard.isFaceUp
                 }, completion: { _ in
                     self.delegate?.updateCounters(for: 2)
+                    if isFinishingGame {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            let dealerHand = self.stand(text: self.dealerHandLabel.text ?? "")
+                            if  dealerHand <= 16 {
+                                self.drawCardForDealer(isFirstCard: false, isFinishingGame: true)
+                            } else {
+                                self.delegate?.calculateWinner(dealerHand: dealerHand)
+                            }
+                        }
+                    }
+                    
                 })
             }
         })
     }
 }
 
-
+private extension GameView {
+    func stand(text: String) -> Int {
+        let array = text.split(separator: "/")
+        if array.count == 2 {
+            let ints = array.map { Int($0) ?? 0}
+            return ints.max() ?? 0
+        } else {
+            return Int(text) ?? 0
+        }
+    }
+}

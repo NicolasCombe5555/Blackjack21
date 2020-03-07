@@ -24,16 +24,19 @@ struct BlackjackBrain {
         } else {
             let handIfAce = fixedCopy.map { $0 == 1 ? 11 : $0}.reduce(0, { $0 + $1 })
             switch (normalHand, handIfAce) {
-            case (_, 21..<100): // handIfAce > 21
+                case (let a, let b) where a == 21 || b == 21:
+                print("5")
+                return "\(21)"
+            case (_, let b) where b > 21:
                 print("1")
                 return "\(normalHand)"
-            case (21..<100, _): // normalHand > 21
+            case (let a, _) where a > 21:
                 print("2")
                 return "\(handIfAce)"
-            case (..<21, ..<21): // handIfAce <= 21 normalHand <= 21
+            case (let a, let b) where a < 21 && b < 21:
                 print("3")
                 return "\(normalHand)/\(handIfAce)"
-            case (21..<100, 21..<100): // handIfAce > 21 normalHand > 21
+            case (let a, let b) where a > 21 && b > 21:
                 print("4")
                 let lowest = min(normalHand, handIfAce)
                 return "\(lowest)"
