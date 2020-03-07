@@ -53,7 +53,6 @@ class BlackjackViewController: UIViewController {
     }
 
     private func endGame(state: Int) {
-        print(state)
         guard let firstDealerCard = myView.dealerCards.first else { return }
         myView.standButton.isEnabled = false
         myView.hitButton.isEnabled = false
