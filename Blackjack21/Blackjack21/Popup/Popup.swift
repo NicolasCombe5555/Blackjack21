@@ -14,54 +14,75 @@ protocol DismissCustomPopUp: class {
 
 class CustomPopUp: UIView, Modal {
 
-    var backgroundView = UIView()
-    var dialogView = UIView()
-    let titleLabel = UILabel()
-    let separatorLineView = UIView()
-    let imageView = UIImageView()
     weak var dismissDelegate: DismissCustomPopUp?
 
-    convenience init(title: String, image: UIImage) {
-        self.init(frame: UIScreen.main.bounds)
-        backgroundView.frame = frame
-        backgroundView.backgroundColor = UIColor.black
-        backgroundView.alpha = 0.8
-        addSubview(backgroundView)
-
-        dialogView.backgroundColor = UIColor.white
-        dialogView.layer.cornerRadius = 6
-        dialogView.clipsToBounds = true
-        dialogView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(dialogView)
-
-        titleLabel.text = title
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.systemFont(ofSize: 13)
-        titleLabel.numberOfLines = 0
-        dialogView.addSubview(titleLabel)
-
-        if #available(iOS 13, *) { separatorLineView.backgroundColor = UIColor.systemGroupedBackground
-        } else { separatorLineView.backgroundColor = UIColor.groupTableViewBackground }
-        separatorLineView.translatesAutoresizingMaskIntoConstraints = false
-        dialogView.addSubview(separatorLineView)
-
-        imageView.image = image
+    var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black
+        view.alpha = 0.8
+        return view
+    }()
+    var dialogView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.white
+        view.layer.cornerRadius = 6
+        view.clipsToBounds = true
+        return view
+    }()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        return label
+    }()
+    let separatorLineView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 13, *) {
+            view.backgroundColor = UIColor.systemGroupedBackground
+        } else {
+            view.backgroundColor = UIColor.groupTableViewBackground
+        }
+        return view
+    }()
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.layer.cornerRadius = 4
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    convenience init(title: String, image: UIImage) {
+        self.init(frame: UIScreen.main.bounds)
+        backgroundView.frame = frame
+        imageView.image = image
+        titleLabel.text = title
+
+        addSubview(backgroundView)
+        addSubview(dialogView)
+        dialogView.addSubview(titleLabel)
+        dialogView.addSubview(separatorLineView)
         dialogView.addSubview(imageView)
 
-        backgroundView.addGestureRecognizer(
+        self.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(didTappedOnBackgroundView)))
 
         setUpConstraints()
     }
 
+    @objc func didTappedOnBackgroundView() {
+        dismiss(animated: true)
+        self.dismissDelegate?.changeUI()
+    }
+
     func setUpConstraints() {
         let padding: CGFloat = 80
-        let imageSize: CGFloat = 60
+        let imageSize: CGFloat = 70
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: dialogView.topAnchor, constant: 8),
@@ -94,10 +115,4 @@ class CustomPopUp: UIView, Modal {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    @objc func didTappedOnBackgroundView() {
-        dismiss(animated: true)
-        self.dismissDelegate?.changeUI()
-    }
-
 }

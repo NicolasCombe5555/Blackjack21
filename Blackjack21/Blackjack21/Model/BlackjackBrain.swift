@@ -13,8 +13,8 @@ enum State {
     case busted
     case normal
 }
+
 struct BlackjackBrain {
-    
     func calculateHand(with cardViews: [CardView]) -> String {
         let copy = cardViews.map { $0.rank }
         let fixedCopy = copy.map { [11,12,13].contains($0) ? 10 : $0}
@@ -24,20 +24,15 @@ struct BlackjackBrain {
         } else {
             let handIfAce = fixedCopy.map { $0 == 1 ? 11 : $0}.reduce(0, { $0 + $1 })
             switch (normalHand, handIfAce) {
-                case (let a, let b) where a == 21 || b == 21:
-                print("5")
+            case (let a, let b) where a == 21 || b == 21:
                 return "\(21)"
             case (_, let b) where b > 21:
-                print("1")
                 return "\(normalHand)"
             case (let a, _) where a > 21:
-                print("2")
                 return "\(handIfAce)"
             case (let a, let b) where a < 21 && b < 21:
-                print("3")
                 return "\(normalHand)/\(handIfAce)"
             case (let a, let b) where a > 21 && b > 21:
-                print("4")
                 let lowest = min(normalHand, handIfAce)
                 return "\(lowest)"
             default:

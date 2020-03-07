@@ -8,12 +8,10 @@
 import UIKit
 
 protocol Modal {
-
     func show(animated: Bool, onView: UIView)
     func dismiss(animated: Bool)
     var backgroundView: UIView {get}
-    var dialogView: UIView {get set}
-
+    var dialogView: UIView {get}
 }
 
 extension Modal where Self: UIView {

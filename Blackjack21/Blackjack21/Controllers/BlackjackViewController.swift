@@ -64,11 +64,11 @@ class BlackjackViewController: UIViewController {
         switch state {
         case 1: // bust
             let dealerHand = stand(text: myView.dealerHandLabel.text ?? "")
-            let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "lose") ?? UIImage())
             alert.dismissDelegate = self
             alert.show(animated: true, onView: self.view)
         case 2: // blackjack
-            let alert = CustomPopUp(title: "Gano jugador con 21!", image: UIImage(named: "backImage") ?? UIImage())
+            let alert = CustomPopUp(title: "Gano jugador con 21!", image: UIImage(named: "win") ?? UIImage())
             alert.dismissDelegate = self
             alert.show(animated: true, onView: self.view)
         case 3:
@@ -152,15 +152,15 @@ extension BlackjackViewController: Dealer {
             alert.dismissDelegate = self
             alert.show(animated: true, onView: self.view)
         case let number where number < self.playerHand:
-            let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "win") ?? UIImage())
             alert.dismissDelegate = self
             alert.show(animated: true, onView: self.view)
         case let number where number > 21:
-            let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "win") ?? UIImage())
             alert.dismissDelegate = self
             alert.show(animated: true, onView: self.view)
         default:
-            let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "backImage") ?? UIImage())
+            let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "lose") ?? UIImage())
             alert.dismissDelegate = self
             alert.show(animated: true, onView: self.view)
         }
@@ -169,6 +169,6 @@ extension BlackjackViewController: Dealer {
 
 extension BlackjackViewController: DismissCustomPopUp {
     func changeUI() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.restartGame() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { self.restartGame() }
     }
 }
