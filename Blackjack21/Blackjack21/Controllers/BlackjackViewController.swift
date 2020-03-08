@@ -24,33 +24,55 @@ class BlackjackViewController: UIViewController {
         setUpView()
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
         startGame()
     }
 
-    private func startGame() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.myView.drawCardForPlayer()
+    private func setUpView() {
+        view = myView
+        myView.delegate = self
+        myView.standButton.addTarget(self, action: #selector(endGameC), for: .touchUpInside)
+        myView.standButton.isEnabled = true
+        myView.dealerHandLabel.isHidden = true
+    }
+
+    private func stand(text: String) -> Int {
+        let array = text.split(separator: "/")
+        if array.count == 2 {
+            let ints = array.map { Int($0) ?? 0}
+            return ints.max() ?? 0
+        } else {
+            return Int(text) ?? 0
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
+    }
+
+    @objc private func startGame() {
+        self.myView.drawCardForPlayer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             self.myView.drawCardForDealer(isFirstCard: true)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
             self.myView.drawCardForPlayer()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             self.myView.drawCardForDealer()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.9) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.9) {
             self.myView.hitButton.isEnabled = true
             self.myView.standButton.isEnabled = true
         }
     }
-    //Workaround passing argument to buttons function
-    @objc private func endGameC() {
-        endGame(state: 3)
+
+    @objc private func restartGame() {
+        myView = GameView()
+        setUpView()
+        perform(#selector(startGame), with: nil, afterDelay: 1)
     }
+
+    //Workaround passing argument to buttons function
+      @objc private func endGameC() {
+          endGame(state: 3)
+      }
 
     private func endGame(state: Int) {
         guard let firstDealerCard = myView.dealerCards.first else { return }
@@ -80,31 +102,6 @@ class BlackjackViewController: UIViewController {
             }
         default:
             return
-        }
-    }
-
-    @objc private func restartGame() {
-        myView = GameView()
-        setUpView()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.startGame() }
-
-    }
-
-    private func setUpView() {
-        view = myView
-        myView.delegate = self
-        myView.standButton.addTarget(self, action: #selector(endGameC), for: .touchUpInside)
-        myView.standButton.isEnabled = true
-        myView.dealerHandLabel.isHidden = true
-    }
-
-    private func stand(text: String) -> Int {
-        let array = text.split(separator: "/")
-        if array.count == 2 {
-            let ints = array.map { Int($0) ?? 0}
-            return ints.max() ?? 0
-        } else {
-            return Int(text) ?? 0
         }
     }
 }
@@ -169,6 +166,6 @@ extension BlackjackViewController: Dealer {
 
 extension BlackjackViewController: DismissCustomPopUp {
     func changeUI() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { self.restartGame() }
+        perform(#selector(restartGame), with: nil, afterDelay: 0.5)
     }
 }

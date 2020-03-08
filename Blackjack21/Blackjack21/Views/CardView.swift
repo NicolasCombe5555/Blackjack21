@@ -10,8 +10,8 @@ import UIKit
 
 class CardView: UIView {
 
-    var rank: Int = 8 { didSet {setNeedsDisplay(); setNeedsLayout() } }
-    var suit: String = "♣️" { didSet {setNeedsDisplay(); setNeedsLayout() } }
+    var rank: Int = 8
+    var suit: String = "♣️"
     var isFaceUp: Bool = false { didSet {setNeedsDisplay(); setNeedsLayout() } }
 
     private lazy var upperLeftCornerLabel = createCornerLabel()
