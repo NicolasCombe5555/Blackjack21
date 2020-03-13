@@ -51,7 +51,7 @@ class GameView: UIView {
         label.textColor = .white
         return label
     }()
-
+    
     let playerHandLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -95,16 +95,16 @@ class GameView: UIView {
             hitButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 40),
             hitButton.heightAnchor.constraint(equalToConstant: 44),
             hitButton.widthAnchor.constraint(equalToConstant: 60),
-
+            
             //Labels
             dealerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 0),
             dealerHandLabel.topAnchor.constraint(equalTo: backgroundImageView.topAnchor, constant: 60),
-
+            
             playerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 0),
             playerHandLabel.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: -60),
         ])
     }
-
+    
     private func setUpButtons() {
         hitButton.addTarget(self, action: #selector(drawCardForPlayer), for: .touchUpInside)
         hitButton.isEnabled = false
@@ -127,13 +127,13 @@ class GameView: UIView {
         }
     }
     
-    @objc func drawCardForPlayer(isGameStarting: Bool = false) {
+    @objc func drawCardForPlayer() {
         hitButton.isEnabled = false
         standButton.isEnabled = false
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
         
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0.75, animations: {
             NSLayoutConstraint.activate([
                 drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * CGFloat(self.playerCards.count))),
                 drawnCard.bottomAnchor.constraint(equalTo: self.backgroundImageView.bottomAnchor, constant: -135),
@@ -146,12 +146,14 @@ class GameView: UIView {
         }, completion: { _ in
             self.playerCards.append(drawnCard)
             
-            UIView.transition(with: drawnCard, duration: 1, options: [.transitionFlipFromLeft], animations: {
+            UIView.transition(with: drawnCard, duration: 0.75, options: [.transitionFlipFromLeft], animations: {
                 drawnCard.isFaceUp = !drawnCard.isFaceUp
             }, completion: { _ in
-                if !isGameStarting {
-                    self.hitButton.isEnabled = true
-                    self.standButton.isEnabled = true
+                if self.playerCards.count >= 2 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                        self.hitButton.isEnabled = true
+                        self.standButton.isEnabled = true
+                    }
                 }
                 self.delegate?.updateCounters(for: 1)
             })
@@ -159,10 +161,12 @@ class GameView: UIView {
     }
     
     @objc func drawCardForDealer(isFirstCard: Bool = false, isFinishingGame: Bool = false) {
+        hitButton.isEnabled = false
+        standButton.isEnabled = false
         let drawnCard = deck.popLast() ?? CardView()
         backgroundImageView.addSubview(drawnCard)
         
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0.75, animations: {
             NSLayoutConstraint.activate([
                 drawnCard.centerXAnchor.constraint(equalTo: self.backgroundImageView.centerXAnchor, constant: -60 + (30 * CGFloat(self.dealerCards.count))),
                 drawnCard.topAnchor.constraint(equalTo: self.backgroundImageView.topAnchor, constant: 135),
@@ -175,7 +179,7 @@ class GameView: UIView {
         }, completion: { _ in
             self.dealerCards.append(drawnCard)
             if !isFirstCard {
-                UIView.transition(with: drawnCard, duration: 1, options: [.transitionFlipFromLeft], animations: {
+                UIView.transition(with: drawnCard, duration: 0.75, options: [.transitionFlipFromLeft], animations: {
                     drawnCard.isFaceUp = !drawnCard.isFaceUp
                 }, completion: { _ in
                     self.delegate?.updateCounters(for: 2)

@@ -48,16 +48,16 @@ class BlackjackViewController: UIViewController {
 
     @objc private func startGame() {
         self.myView.drawCardForPlayer()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
             self.myView.drawCardForDealer(isFirstCard: true)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.45) {
             self.myView.drawCardForPlayer()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.15) {
             self.myView.drawCardForDealer()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.9) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.85) {
             self.myView.hitButton.isEnabled = true
             self.myView.standButton.isEnabled = true
         }
@@ -110,6 +110,8 @@ extension BlackjackViewController: Dealer {
     func updateUI(state: State) {
         switch state {
         case .busted:
+            myView.hitButton.isEnabled = false
+            myView.standButton.isEnabled = false
             myView.playerHandLabel.textColor = .systemRed
             UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
                 self.myView.playerHandLabel.transform = CGAffineTransform(scaleX: 2, y: 2)
@@ -122,6 +124,8 @@ extension BlackjackViewController: Dealer {
                 }
             }
         case .blackjack:
+            myView.hitButton.isEnabled = false
+            myView.standButton.isEnabled = false
             myView.playerHandLabel .textColor = .systemGreen
             endGame(state: 2)
         default:
