@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol Dealer: class {
+protocol DealerDelegate: AnyObject {
     func updateUI(state: State)
     func updateCounters(for type: Int8)
     func calculateWinner(dealerHand: Int)
@@ -106,7 +106,7 @@ class BlackjackViewController: UIViewController {
     }
 }
 
-extension BlackjackViewController: Dealer {
+extension BlackjackViewController: DealerDelegate {
     func updateUI(state: State) {
         switch state {
         case .busted:

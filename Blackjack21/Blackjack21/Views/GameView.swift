@@ -13,7 +13,7 @@ class GameView: UIView {
     private var deck = [CardView]()
     var dealerCards = [CardView]()
     var playerCards = [CardView]()
-    weak var delegate: Dealer?
+    weak var delegate: DealerDelegate?
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
