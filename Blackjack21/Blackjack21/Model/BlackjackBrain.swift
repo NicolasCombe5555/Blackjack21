@@ -17,7 +17,7 @@ enum State {
 struct BlackjackBrain {
     func calculateHand(with cardViews: [CardView]) -> String {
         let copy = cardViews.map { $0.rank }
-        let fixedCopy = copy.map { [11,12,13].contains($0) ? 10 : $0}
+        let fixedCopy = copy.map { [11, 12, 13].contains($0) ? 10 : $0}
         let normalHand = fixedCopy.reduce(0, { $0 + $1 })
         if !fixedCopy.contains(1) {
             return "\(normalHand)"
@@ -40,11 +40,9 @@ struct BlackjackBrain {
             }
         }
     }
-    
+
     func checkHand(_ hand: Int) -> State {
-        if hand > 21 { return .busted }
-        else if hand == 21 { return .blackjack }
-        else { return .normal }
+        if hand > 21 { return .busted } else if hand == 21 { return .blackjack } else { return .normal }
 
     }
 }

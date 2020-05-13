@@ -16,16 +16,16 @@ class CardView: UIView {
 
     private lazy var upperLeftCornerLabel = createCornerLabel()
     private lazy var lowerRightCornerLabel = createCornerLabel()
-    private var cornerString : NSAttributedString{
+    private var cornerString: NSAttributedString {
         return centeredAttributedString(rankString+"\n"+suit, fontSize: cornerFontSize)
     }
 
-    private func centeredAttributedString(_ string: String , fontSize : CGFloat) -> NSAttributedString {
+    private func centeredAttributedString(_ string: String, fontSize: CGFloat) -> NSAttributedString {
         var font = UIFont.preferredFont(forTextStyle: .body).withSize(fontSize)
         font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        return NSAttributedString(string: string, attributes: [.paragraphStyle:paragraphStyle,.font:font])
+        return NSAttributedString(string: string, attributes: [.paragraphStyle: paragraphStyle, .font: font])
     }
 
     private func createCornerLabel() -> UILabel {
@@ -35,7 +35,7 @@ class CardView: UIView {
         return label
     }
 
-    private func configureCornerLabel(_ label :UILabel) {
+    private func configureCornerLabel(_ label: UILabel) {
         label.attributedText = cornerString
         label.frame.size = CGSize.zero
         label.sizeToFit()
@@ -62,19 +62,18 @@ class CardView: UIView {
             } else {
                 pintarCarta()
             }
-        }
-        else {
-            if let cardBackImage = UIImage(named : "backImage", in : Bundle(for:self.classForCoder), compatibleWith: traitCollection) {
+        } else {
+            if let cardBackImage = UIImage(named: "backImage", in: Bundle(for: self.classForCoder), compatibleWith: traitCollection) {
                 cardBackImage.draw(in: bounds)
             }
         }
     }
     private func pintarCarta() {
-        let pipsPerRowForRank = [[0],[1],[1,1],[1,1,1],[2,2],[2,1,2],[2,2,2],[2,1,2,2],[2,2,2,2],[2,2,1,2,2],[2,2,2,2,2]]
+        let pipsPerRowForRank = [[0], [1], [1, 1], [1, 1, 1], [2, 2], [2, 1, 2], [2, 2, 2], [2, 1, 2, 2], [2, 2, 2, 2], [2, 2, 1, 2, 2], [2, 2, 2, 2, 2]]
 
-        func createPipString(thatFits pipRect:CGRect) -> NSAttributedString {
-            let maxVerticalPipCount = CGFloat(pipsPerRowForRank.reduce(0){ max($1.count , $0)})
-            let maxHorizontalPipCount = CGFloat(pipsPerRowForRank.reduce(0){ max($1.max() ?? 0 , $0)})
+        func createPipString(thatFits pipRect: CGRect) -> NSAttributedString {
+            let maxVerticalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.count, $0)})
+            let maxHorizontalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.max() ?? 0, $0)})
             let verticalPipRowSpacing = pipRect.size.height / maxVerticalPipCount
             let attemptedPipString = centeredAttributedString(suit, fontSize: verticalPipRowSpacing)
             let probablyOkayPipStringFontSize = verticalPipRowSpacing / (attemptedPipString.size().height / verticalPipRowSpacing)
@@ -108,21 +107,21 @@ class CardView: UIView {
 
 extension CardView {
     private struct Constants {
-        static let cornerFontSizeBoundsHeight : CGFloat = 0.085
-        static let cornerRadiusSizeBoundsHeight : CGFloat = 0.06
-        static let cornerOffsetToCornerRadius : CGFloat = 0.33
-        static let faceCardImageSizeToBoundsSize : CGFloat = 0.75
+        static let cornerFontSizeBoundsHeight: CGFloat = 0.085
+        static let cornerRadiusSizeBoundsHeight: CGFloat = 0.06
+        static let cornerOffsetToCornerRadius: CGFloat = 0.33
+        static let faceCardImageSizeToBoundsSize: CGFloat = 0.75
     }
-    private var cornerRadius : CGFloat {
+    private var cornerRadius: CGFloat {
         return bounds.size.height * Constants.cornerRadiusSizeBoundsHeight
     }
-    private var cornerOffset : CGFloat {
+    private var cornerOffset: CGFloat {
         return cornerRadius * Constants.cornerOffsetToCornerRadius
     }
-    private var cornerFontSize : CGFloat {
+    private var cornerFontSize: CGFloat {
         return bounds.size.height * Constants.cornerFontSizeBoundsHeight
     }
-    private var rankString : String {
+    private var rankString: String {
         switch rank {
         case 1 : return "A"
         case 2...10 : return String(rank)

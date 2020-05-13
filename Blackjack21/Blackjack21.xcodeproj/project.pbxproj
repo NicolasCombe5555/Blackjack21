@@ -72,7 +72,6 @@
 		AE35D8B42402D9E700E1BA4B /* Blackjack21 */ = {
 			isa = PBXGroup;
 			children = (
-				AE4B0A0E24134728007A2FA8 /* Popup */,
 				AE35D8C92402F1DC00E1BA4B /* SupportingFiles */,
 				AE375FF7240F1C5A00066DF5 /* Extensions */,
 				AE35D8CA2402F20500E1BA4B /* Model */,
@@ -107,6 +106,7 @@
 		AE35D8CB2402F20C00E1BA4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AE4B0A0E24134728007A2FA8 /* Popup */,
 				AE35D8D124031FF000E1BA4B /* CardView.swift */,
 				AE35D8D52403283300E1BA4B /* GameView.swift */,
 			);

@@ -54,4 +54,3 @@ extension Modal where Self: UIView {
         }
     }
 }
-

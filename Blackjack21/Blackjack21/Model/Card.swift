@@ -14,7 +14,6 @@ struct Card: CustomStringConvertible {
     var suit: Suit
     var rank: Rank
 
-
     enum Suit: String, CustomStringConvertible {
 
         var description: String {return rawValue}
