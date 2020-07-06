@@ -18,14 +18,14 @@ class CustomPopUp: UIView, Modal {
 
     var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = .black
         view.alpha = 0.8
         return view
     }()
     var dialogView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .white
         view.layer.cornerRadius = 6
         view.clipsToBounds = true
         return view
@@ -42,9 +42,9 @@ class CustomPopUp: UIView, Modal {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 13, *) {
-            view.backgroundColor = UIColor.systemGroupedBackground
+            view.backgroundColor = .systemGroupedBackground
         } else {
-            view.backgroundColor = UIColor.groupTableViewBackground
+            view.backgroundColor = .groupTableViewBackground
         }
         return view
     }()
@@ -69,7 +69,7 @@ class CustomPopUp: UIView, Modal {
         dialogView.addSubview(separatorLineView)
         dialogView.addSubview(imageView)
 
-        self.addGestureRecognizer(
+        addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(didTappedOnBackgroundView)))
 
         setUpConstraints()
@@ -91,19 +91,19 @@ class CustomPopUp: UIView, Modal {
 
             separatorLineView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             separatorLineView.heightAnchor.constraint(equalToConstant: 2),
-            separatorLineView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding-8),
-            separatorLineView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding+8),
+            separatorLineView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding-8),
+            separatorLineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding+8),
             separatorLineView.centerXAnchor.constraint(equalTo: dialogView.centerXAnchor, constant: 0),
 
             imageView.topAnchor.constraint(equalTo: separatorLineView.bottomAnchor, constant: 4),
-            imageView.centerXAnchor.constraint(equalTo: dialogView.centerXAnchor, constant: 0),
+            imageView.centerXAnchor.constraint(equalTo: dialogView.centerXAnchor),
             imageView.heightAnchor.constraint(equalToConstant: imageSize),
             imageView.widthAnchor.constraint(equalToConstant: imageSize),
 
-            dialogView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
-            dialogView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
-            dialogView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            dialogView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+            dialogView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            dialogView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            dialogView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dialogView.centerYAnchor.constraint(equalTo: centerYAnchor),
             dialogView.heightAnchor.constraint(equalToConstant: 40 + imageSize)
         ])
     }

@@ -10,15 +10,16 @@ import UIKit
 protocol Modal {
     func show(animated: Bool, onView: UIView)
     func dismiss(animated: Bool)
-    var backgroundView: UIView {get}
-    var dialogView: UIView {get}
+    var backgroundView: UIView { get }
+    var dialogView: UIView { get }
 }
 
 extension Modal where Self: UIView {
     func show(animated: Bool, onView: UIView) {
-        self.backgroundView.alpha = 0
-        self.dialogView.center = CGPoint(x: self.center.x, y: self.frame.height + self.dialogView.frame.height/2)
+        backgroundView.alpha = 0
+        dialogView.center = CGPoint(x: center.x, y: frame.height + dialogView.frame.height/2)
         onView.addSubview(self)
+
         if animated {
             UIView.animate(withDuration: 0.33, animations: {
                 self.backgroundView.alpha = 0.66
@@ -50,7 +51,7 @@ extension Modal where Self: UIView {
                 self.removeFromSuperview()
             })
         } else {
-            self.removeFromSuperview()
+            removeFromSuperview()
         }
     }
 }
