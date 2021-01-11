@@ -25,6 +25,7 @@ class BlackjackViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         startGame()
     }
 
@@ -107,6 +108,7 @@ class BlackjackViewController: UIViewController {
 }
 
 extension BlackjackViewController: DealerDelegate {
+
     func updateUI(state: State) {
         switch state {
         case .busted:
@@ -166,10 +168,13 @@ extension BlackjackViewController: DealerDelegate {
             alert.show(animated: true, onView: self.view)
         }
     }
+
 }
 
 extension BlackjackViewController: DismissCustomPopUp {
+
     func changeUI() {
         perform(#selector(restartGame), with: nil, afterDelay: 0.5)
     }
+
 }

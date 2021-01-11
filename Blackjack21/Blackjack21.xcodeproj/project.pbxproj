@@ -40,6 +40,7 @@
 		AE4B0A0F2413473F007A2FA8 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
 		AE4B0A1124134769007A2FA8 /* Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
 		AE4D01E6241193B30088A7ED /* BlackjackBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackBrain.swift; sourceTree = "<group>"; };
+		AE5D37CD25ABE30700829504 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +57,7 @@
 		AE35D8A92402D9E700E1BA4B = {
 			isa = PBXGroup;
 			children = (
+				AE5D37CD25ABE30700829504 /* .swiftlint.yml */,
 				AE35D8B42402D9E700E1BA4B /* Blackjack21 */,
 				AE35D8B32402D9E700E1BA4B /* Products */,
 			);
@@ -149,6 +151,7 @@
 				AE35D8AE2402D9E700E1BA4B /* Sources */,
 				AE35D8AF2402D9E700E1BA4B /* Frameworks */,
 				AE35D8B02402D9E700E1BA4B /* Resources */,
+				AE5D37CB25ABE29B00829504 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -166,7 +169,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Nicolas Combe";
 				TargetAttributes = {
 					AE35D8B12402D9E700E1BA4B = {
@@ -203,6 +206,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AE5D37CB25ABE29B00829504 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AE35D8AE2402D9E700E1BA4B /* Sources */ = {
@@ -264,6 +288,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -324,6 +349,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

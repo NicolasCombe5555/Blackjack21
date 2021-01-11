@@ -9,5 +9,7 @@
 import UIKit
 
 extension UIColor {
-    static var repasOrange: UIColor { return self.init(red: 236/255, green: 145/255, blue: 57/255, alpha: 1) }
+
+    static var blackjack: UIColor { return self.init(red: 236/255, green: 145/255, blue: 57/255, alpha: 1) }
+
 }

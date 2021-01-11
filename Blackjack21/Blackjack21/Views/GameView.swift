@@ -201,6 +201,7 @@ class GameView: UIView {
 }
 
 private extension GameView {
+
     func stand(text: String) -> Int {
         let array = text.split(separator: "/")
         if array.count == 2 {
@@ -210,4 +211,5 @@ private extension GameView {
             return Int(text) ?? 0
         }
     }
+    
 }
