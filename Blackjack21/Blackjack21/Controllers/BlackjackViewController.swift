@@ -48,7 +48,7 @@ class BlackjackViewController: UIViewController {
     }
 
     @objc private func startGame() {
-        self.myView.drawCardForPlayer()
+        myView.drawCardForPlayer()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
             self.myView.drawCardForDealer(isFirstCard: true)
         }
@@ -81,19 +81,19 @@ class BlackjackViewController: UIViewController {
         myView.hitButton.isEnabled = false
         myView.dealerHandLabel.isHidden = false
         playerHand = stand(text: myView.playerHandLabel.text ?? "")
-        UIView.transition(with: firstDealerCard, duration: 0.5, options: [.transitionFlipFromLeft], animations: {
+        UIView.transition(with: firstDealerCard, duration: 0.5, options: [.transitionFlipFromLeft]) {
             firstDealerCard.isFaceUp = !firstDealerCard.isFaceUp
-        })
+        }
         switch state {
         case 1: // bust
             let dealerHand = stand(text: myView.dealerHandLabel.text ?? "")
             let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "lose") ?? UIImage())
             alert.dismissDelegate = self
-            alert.show(animated: true, onView: self.view)
+            alert.show(animated: true, onView: view)
         case 2: // blackjack
             let alert = CustomPopUp(title: "Gano jugador con 21!", image: UIImage(named: "win") ?? UIImage())
             alert.dismissDelegate = self
-            alert.show(animated: true, onView: self.view)
+            alert.show(animated: true, onView: view)
         case 3:
             let dealerHand = stand(text: myView.dealerHandLabel.text ?? "")
             if dealerHand <= 16 {
@@ -117,7 +117,6 @@ extension BlackjackViewController: DealerDelegate {
             myView.playerHandLabel.textColor = .systemRed
             UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
                 self.myView.playerHandLabel.transform = CGAffineTransform(scaleX: 2, y: 2)
-
             }) { _ in
                 UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
                     self.myView.playerHandLabel.transform = .identity
@@ -153,19 +152,19 @@ extension BlackjackViewController: DealerDelegate {
         case let number where number == self.playerHand:
             let alert = CustomPopUp(title: "Empate", image: UIImage(named: "backImage") ?? UIImage())
             alert.dismissDelegate = self
-            alert.show(animated: true, onView: self.view)
+            alert.show(animated: true, onView: view)
         case let number where number < self.playerHand:
             let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "win") ?? UIImage())
             alert.dismissDelegate = self
-            alert.show(animated: true, onView: self.view)
+            alert.show(animated: true, onView: view)
         case let number where number > 21:
             let alert = CustomPopUp(title: "Gano jugador con \(playerHand)", image: UIImage(named: "win") ?? UIImage())
             alert.dismissDelegate = self
-            alert.show(animated: true, onView: self.view)
+            alert.show(animated: true, onView: view)
         default:
             let alert = CustomPopUp(title: "Gano la casa con \(dealerHand)", image: UIImage(named: "lose") ?? UIImage())
             alert.dismissDelegate = self
-            alert.show(animated: true, onView: self.view)
+            alert.show(animated: true, onView: view)
         }
     }
 
@@ -173,7 +172,7 @@ extension BlackjackViewController: DealerDelegate {
 
 extension BlackjackViewController: DismissCustomPopUp {
 
-    func changeUI() {
+    func updateUI() {
         perform(#selector(restartGame), with: nil, afterDelay: 0.5)
     }
 

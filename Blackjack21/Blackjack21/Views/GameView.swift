@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameView: UIView {
+final class GameView: UIView {
 
     private var deck = [CardView]()
     var dealerCards = [CardView]()
@@ -80,27 +80,27 @@ class GameView: UIView {
 
         NSLayoutConstraint.activate([
             //Background Image
-            backgroundImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             //Buttons
-            standButton.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor, constant: 0),
+            standButton.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor),
             standButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: -40),
             standButton.heightAnchor.constraint(equalToConstant: 44),
             standButton.widthAnchor.constraint(equalToConstant: 60),
 
-            hitButton.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor, constant: 0),
+            hitButton.centerYAnchor.constraint(equalTo: backgroundImageView.centerYAnchor),
             hitButton.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 40),
             hitButton.heightAnchor.constraint(equalToConstant: 44),
             hitButton.widthAnchor.constraint(equalToConstant: 60),
 
             //Labels
-            dealerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 0),
+            dealerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor),
             dealerHandLabel.topAnchor.constraint(equalTo: backgroundImageView.topAnchor, constant: 60),
 
-            playerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor, constant: 0),
+            playerHandLabel.centerXAnchor.constraint(equalTo: backgroundImageView.centerXAnchor),
             playerHandLabel.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: -60)
         ])
     }
@@ -193,11 +193,11 @@ class GameView: UIView {
                             }
                         }
                     }
-
                 })
             }
         })
     }
+
 }
 
 private extension GameView {
@@ -205,11 +205,11 @@ private extension GameView {
     func stand(text: String) -> Int {
         let array = text.split(separator: "/")
         if array.count == 2 {
-            let ints = array.map { Int($0) ?? 0}
-            return ints.max() ?? 0
+            let choices = array.map { Int($0) ?? 0}
+            return choices.max() ?? 0
         } else {
             return Int(text) ?? 0
         }
     }
-    
+
 }

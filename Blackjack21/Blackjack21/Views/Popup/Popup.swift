@@ -8,21 +8,22 @@
 
 import UIKit
 
-protocol DismissCustomPopUp: class {
-    func changeUI()
+protocol DismissCustomPopUp: AnyObject {
+    func updateUI()
 }
 
-class CustomPopUp: UIView, Modal {
+final class CustomPopUp: UIView, Modal {
 
     weak var dismissDelegate: DismissCustomPopUp?
 
-    var backgroundView: UIView = {
+    let backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         view.alpha = 0.8
         return view
     }()
-    var dialogView: UIView = {
+
+    let dialogView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -30,6 +31,7 @@ class CustomPopUp: UIView, Modal {
         view.clipsToBounds = true
         return view
     }()
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +40,7 @@ class CustomPopUp: UIView, Modal {
         label.numberOfLines = 0
         return label
     }()
+
     let separatorLineView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +51,7 @@ class CustomPopUp: UIView, Modal {
         }
         return view
     }()
+
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4
@@ -77,7 +81,7 @@ class CustomPopUp: UIView, Modal {
 
     @objc func didTappedOnBackgroundView() {
         dismiss(animated: true)
-        self.dismissDelegate?.changeUI()
+        dismissDelegate?.updateUI()
     }
 
     func setUpConstraints() {
@@ -86,8 +90,8 @@ class CustomPopUp: UIView, Modal {
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: dialogView.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: dialogView.leadingAnchor, constant: 0),
-            titleLabel.trailingAnchor.constraint(equalTo: dialogView.trailingAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: dialogView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: dialogView.trailingAnchor),
 
             separatorLineView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             separatorLineView.heightAnchor.constraint(equalToConstant: 2),
@@ -115,4 +119,5 @@ class CustomPopUp: UIView, Modal {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }

@@ -8,16 +8,33 @@
 
 import UIKit
 
-class CardView: UIView {
+final class CardView: UIView {
 
-    var rank: Int = 8
-    var suit: String = "♣️"
-    var isFaceUp: Bool = false { didSet {setNeedsDisplay(); setNeedsLayout() } }
+    // MARK: - Properties
+    var rank = 8
+    var suit = "♣️"
+    var isFaceUp = false { didSet { setNeedsDisplay(); setNeedsLayout() } }
+
+    // MARK: - UI Elements
+    private func createCornerLabel() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        addSubview(label)
+        return label
+    }
 
     private lazy var upperLeftCornerLabel = createCornerLabel()
     private lazy var lowerRightCornerLabel = createCornerLabel()
+
     private var cornerString: NSAttributedString {
-        return centeredAttributedString(rankString+"\n"+suit, fontSize: cornerFontSize)
+        centeredAttributedString(rankString+"\n"+suit, fontSize: cornerFontSize)
+    }
+
+    private func configureCornerLabel(_ label: UILabel) {
+        label.attributedText = cornerString
+        label.frame.size = CGSize.zero
+        label.sizeToFit()
+        label.isHidden = !isFaceUp
     }
 
     private func centeredAttributedString(_ string: String, fontSize: CGFloat) -> NSAttributedString {
@@ -28,27 +45,20 @@ class CardView: UIView {
         return NSAttributedString(string: string, attributes: [.paragraphStyle: paragraphStyle, .font: font])
     }
 
-    private func createCornerLabel() -> UILabel {
-        let label = UILabel()
-        label.numberOfLines = 0
-        addSubview(label)
-        return label
-    }
-
-    private func configureCornerLabel(_ label: UILabel) {
-        label.attributedText = cornerString
-        label.frame.size = CGSize.zero
-        label.sizeToFit()
-        label.isHidden = !isFaceUp
-    }
-
+    // MARK: - Life Cycle
     override func layoutSubviews() {
         super.layoutSubviews()
         configureCornerLabel(upperLeftCornerLabel)
         upperLeftCornerLabel.frame.origin = bounds.origin.offsetBy(dx: cornerOffset, dy: cornerOffset)
         configureCornerLabel(lowerRightCornerLabel)
-        lowerRightCornerLabel.transform = CGAffineTransform.identity.translatedBy(x: lowerRightCornerLabel.frame.size.width, y: lowerRightCornerLabel.frame.size.height).rotated(by: CGFloat.pi)
-        lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
+        lowerRightCornerLabel.transform = CGAffineTransform.identity.translatedBy(
+            x: lowerRightCornerLabel.frame.size.width,
+            y: lowerRightCornerLabel.frame.size.height
+        )
+        .rotated(by: CGFloat.pi)
+        lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY)
+            .offsetBy(dx: -cornerOffset, dy: -cornerOffset)
+            .offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
     }
 
     override func draw(_ rect: CGRect) {
@@ -60,16 +70,19 @@ class CardView: UIView {
             if let faceCardImage = UIImage(named: rankString+suit) {
                 faceCardImage.draw(in: bounds.zoom(by: Constants.faceCardImageSizeToBoundsSize))
             } else {
-                pintarCarta()
+                drawCard()
             }
         } else {
-            if let cardBackImage = UIImage(named: "backImage", in: Bundle(for: self.classForCoder), compatibleWith: traitCollection) {
+            if let cardBackImage = UIImage(named: "backImage", in: Bundle(for: classForCoder), compatibleWith: traitCollection) {
                 cardBackImage.draw(in: bounds)
             }
         }
     }
-    private func pintarCarta() {
-        let pipsPerRowForRank = [[0], [1], [1, 1], [1, 1, 1], [2, 2], [2, 1, 2], [2, 2, 2], [2, 1, 2, 2], [2, 2, 2, 2], [2, 2, 1, 2, 2], [2, 2, 2, 2, 2]]
+
+    // MARK: - Helpers
+    private func drawCard() {
+        let pipsPerRowForRank = [[0], [1], [1, 1], [1, 1, 1], [2, 2], [2, 1, 2], [2, 2, 2],
+                                 [2, 1, 2, 2], [2, 2, 2, 2], [2, 2, 1, 2, 2], [2, 2, 2, 2, 2]]
 
         func createPipString(thatFits pipRect: CGRect) -> NSAttributedString {
             let maxVerticalPipCount = CGFloat(pipsPerRowForRank.reduce(0) { max($1.count, $0)})
@@ -103,25 +116,32 @@ class CardView: UIView {
             }
         }
     }
+
 }
 
 extension CardView {
+
     private struct Constants {
         static let cornerFontSizeBoundsHeight: CGFloat = 0.085
         static let cornerRadiusSizeBoundsHeight: CGFloat = 0.06
         static let cornerOffsetToCornerRadius: CGFloat = 0.33
         static let faceCardImageSizeToBoundsSize: CGFloat = 0.75
     }
+
     private var cornerRadius: CGFloat {
-        return bounds.size.height * Constants.cornerRadiusSizeBoundsHeight
+        bounds.size.height * Constants.cornerRadiusSizeBoundsHeight
     }
+
     private var cornerOffset: CGFloat {
-        return cornerRadius * Constants.cornerOffsetToCornerRadius
+        cornerRadius * Constants.cornerOffsetToCornerRadius
     }
+
     private var cornerFontSize: CGFloat {
-        return bounds.size.height * Constants.cornerFontSizeBoundsHeight
+        bounds.size.height * Constants.cornerFontSizeBoundsHeight
     }
+
     private var rankString: String {
+
         switch rank {
         case 1 : return "A"
         case 2...10 : return String(rank)
@@ -130,6 +150,7 @@ extension CardView {
         case 13 : return "K"
         default: return "?"
         }
+
     }
-    
+
 }

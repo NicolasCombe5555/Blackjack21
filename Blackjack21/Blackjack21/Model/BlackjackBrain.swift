@@ -17,24 +17,27 @@ enum State {
 struct BlackjackBrain {
 
     func calculateHand(with cardViews: [CardView]) -> String {
-        let copy = cardViews.map { $0.rank }
-        let fixedCopy = copy.map { [11, 12, 13].contains($0) ? 10 : $0}
-        let normalHand = fixedCopy.reduce(0, { $0 + $1 })
-        if !fixedCopy.contains(1) {
+        let ranks = cardViews.map { $0.rank }
+        let transformedRanks = ranks.map { [11, 12, 13].contains($0) ? 10 : $0} // transform face cards to 10
+        let normalHand = transformedRanks.reduce(0) { $0 + $1 }
+
+        if !transformedRanks.contains(1) { // 1 = Ace
             return "\(normalHand)"
         } else {
-            let handIfAce = fixedCopy.map { $0 == 1 ? 11 : $0}.reduce(0, { $0 + $1 })
-            switch (normalHand, handIfAce) {
+            let handIfAceEquals11 = transformedRanks
+                .map { $0 == 1 ? 11 : $0 }
+                .reduce(0) { $0 + $1 }
+            switch (normalHand, handIfAceEquals11) {
             case (let a, let b) where a == 21 || b == 21:
                 return "\(21)"
             case (_, let b) where b > 21:
                 return "\(normalHand)"
             case (let a, _) where a > 21:
-                return "\(handIfAce)"
+                return "\(handIfAceEquals11)"
             case (let a, let b) where a < 21 && b < 21:
-                return "\(normalHand)/\(handIfAce)"
+                return "\(normalHand)/\(handIfAceEquals11)"
             case (let a, let b) where a > 21 && b > 21:
-                let lowest = min(normalHand, handIfAce)
+                let lowest = min(normalHand, handIfAceEquals11)
                 return "\(lowest)"
             default:
                 return "\(normalHand)"

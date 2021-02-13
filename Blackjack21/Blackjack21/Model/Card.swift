@@ -10,25 +10,26 @@ import Foundation
 
 struct Card: CustomStringConvertible {
 
-    var description: String { return "\(rank)\(suit)"}
+    var description: String { "\(rank)\(suit)"}
     var suit: Suit
     var rank: Rank
 
     enum Suit: String, CustomStringConvertible {
 
-        var description: String {return rawValue}
+        var description: String { rawValue }
 
-        case spades = "♠️"
-        case hearts = "♥️"
-        case clubs = "♣️"
+        case spades   = "♠️"
+        case hearts   = "♥️"
+        case clubs    = "♣️"
         case diamonds = "♦️"
 
-        static var all = [Suit.spades, .hearts, .diamonds, .clubs]
+        static var all: [Suit] = [.spades, .hearts, .diamonds, .clubs]
+
     }
 
     enum Rank: Int, CustomStringConvertible {
 
-        var description: String { return "\(self.rawValue)" }
+        var description: String { "\(rawValue)" }
 
         case ace = 1
         case two
@@ -45,7 +46,9 @@ struct Card: CustomStringConvertible {
         case king
 
         static var all: [Rank] {
-            return [Rank.ace, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .jack, .queen, .king]
+            [.ace, .two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .jack, .queen, .king]
         }
+
     }
+
 }
