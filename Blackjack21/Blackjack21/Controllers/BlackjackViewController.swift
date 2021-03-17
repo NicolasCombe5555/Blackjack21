@@ -14,7 +14,7 @@ protocol DealerDelegate: AnyObject {
     func calculateWinner(dealerHand: Int)
 }
 
-class BlackjackViewController: UIViewController {
+final class BlackjackViewController: UIViewController {
 
     private var myView = GameView()
     private let blackjackBrain = BlackjackBrain()
